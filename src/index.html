@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오늘의 운세</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="mobile-frame">
+    <!-- 상단 헤더 영역 -->
+    <header class="app-header">
+      <div class="header-icon" aria-hidden="true">🥠</div>
+      <h1 class="app-title">오늘의 운세</h1>
+      <p class="app-subtitle">오늘 나에게 찾아올 행운을 열어보세요</p>
+    </header>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="main-content">
+      <!-- 메인 운세 확인 버튼 -->
+      <section class="action-section">
+        <button id="fortuneButton" class="fortune-btn" type="button">
+          <span class="btn-emoji" aria-hidden="true">✨</span>
+          <span id="btnText" class="btn-text">운세 보기</span>
+        </button>
+      </section>
+
+      <!-- 운세 결과 카드 (초기 상태 숨김) -->
+      <section id="resultCard" class="result-card hidden" aria-live="polite">
+        <!-- 등급 뱃지 -->
+        <div class="card-badge-wrap">
+          <span id="fortuneLevel" class="fortune-badge">대길</span>
+        </div>
+
+        <!-- 메인 운세 문구 -->
+        <div class="message-section">
+          <p id="fortuneMessage" class="fortune-message"></p>
+        </div>
+
+        <div class="card-divider" role="separator"></div>
+
+        <!-- 세부 정보 (조언 및 행운의 아이템) -->
+        <div class="detail-section">
+          <div class="detail-item">
+            <span class="detail-icon" aria-hidden="true">💡</span>
+            <div class="detail-text-group">
+              <span class="detail-label">오늘의 조언</span>
+              <p id="fortuneAdvice" class="detail-content"></p>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-icon" aria-hidden="true">🍀</span>
+            <div class="detail-text-group">
+              <span class="detail-label">행운의 아이템</span>
+              <p id="fortuneLuckyItem" class="detail-content"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 하루 유지 안내 -->
+        <p class="retention-notice">※ 오늘 하루 동안 동일한 운세가 유지됩니다.</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

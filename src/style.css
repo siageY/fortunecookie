@@ -1,0 +1,375 @@
+/* ==========================================================================
+   Design Tokens (docs/design.md 기준 100% 매핑)
+   ========================================================================== */
+:root {
+  /* Colors */
+  --color-primary: #243B53;
+  --color-primary-hover: #102A43;
+  --color-brand: #8EC5FC;
+
+  /* Canvas Gradient */
+  --canvas-gradient-top: #8EC5FC;
+  --canvas-gradient-mid: #B8DCFE;
+  --canvas-gradient-soft: #FBE8F2;
+  --canvas-gradient-bottom: #FAD0C4;
+
+  /* Surfaces & Borders */
+  --surface-card: #FFFFFF;
+  --surface-subtle: #F8FAFC;
+  --border-divider: #F0F4F8;
+
+  /* Typography Colors */
+  --foreground: #1A2C3F;
+  --body: #334E68;
+  --muted: #829AB1;
+  --caption: #9FB3C8;
+
+  /* Level Colors: 대길 */
+  --level-daegil-text: #E03131;
+  --level-daegil-bg: #FFE3E3;
+  --level-daegil-shadow: rgba(224, 49, 49, 0.18);
+
+  /* Level Colors: 길 */
+  --level-gil-text: #0CA678;
+  --level-gil-bg: #E6FCF5;
+  --level-gil-shadow: rgba(12, 166, 120, 0.18);
+
+  /* Level Colors: 보통 */
+  --level-botong-text: #1971C2;
+  --level-botong-bg: #E7F5FF;
+  --level-botong-shadow: rgba(25, 113, 194, 0.18);
+
+  /* Level Colors: 조심 */
+  --level-josim-text: #6741D9;
+  --level-josim-bg: #F3F0FF;
+  --level-josim-shadow: rgba(103, 65, 217, 0.18);
+
+  /* Typography Font Family */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+
+  /* Rounded Radii */
+  --rounded-sm: 8px;
+  --rounded-md: 14px;
+  --rounded-lg: 18px;
+  --rounded-xl: 24px;
+  --rounded-card: 28px;
+  --rounded-frame: 40px;
+  --rounded-full: 9999px;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-base: 16px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+  --space-section: 48px;
+
+  /* Shadows */
+  --shadow-btn: 0 10px 24px rgba(40, 75, 110, 0.15);
+  --shadow-btn-hover: 0 14px 28px rgba(40, 75, 110, 0.2);
+  --shadow-btn-active: 0 6px 16px rgba(40, 75, 110, 0.15);
+  --shadow-card: 0 16px 36px rgba(35, 70, 105, 0.16);
+}
+
+/* ==========================================================================
+   기본 리셋 및 전역 레이아웃
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #f0f4f9;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--body);
+}
+
+/* ==========================================================================
+   모바일 뷰 프레임 (420px 뷰포트 기준 반응형)
+   ========================================================================== */
+.mobile-frame {
+  width: 100%;
+  max-width: 420px;
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    var(--canvas-gradient-top) 0%,
+    var(--canvas-gradient-mid) 30%,
+    var(--canvas-gradient-soft) 70%,
+    var(--canvas-gradient-bottom) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-section) var(--space-xl) var(--space-xxl);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  overflow-y: auto;
+}
+
+@media (min-width: 500px) {
+  .mobile-frame {
+    min-height: 840px;
+    height: 90vh;
+    border-radius: var(--rounded-frame);
+    border: 8px solid #ffffff;
+    box-shadow: 0 25px 60px rgba(70, 110, 150, 0.25);
+  }
+}
+
+/* ==========================================================================
+   상단 헤더
+   ========================================================================== */
+.app-header {
+  text-align: center;
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-xxl);
+}
+
+.header-icon {
+  font-size: 48px;
+  margin-bottom: var(--space-sm);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
+  animation: floatIcon 3s ease-in-out infinite;
+}
+
+.app-title {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: var(--foreground);
+  margin-bottom: 6px;
+  text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
+}
+
+.app-subtitle {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   메인 컨텐츠 및 버튼 영역
+   ========================================================================== */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+  width: 100%;
+}
+
+.action-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* button-fortune: 24px 라운드, 볼록 입체감, 터치 반응 */
+.fortune-btn {
+  width: 100%;
+  max-width: 320px;
+  padding: 18px var(--space-xl);
+  background: linear-gradient(135deg, #FFFFFF 0%, #FBFBFC 100%);
+  border: none;
+  border-radius: var(--rounded-xl);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-primary);
+  cursor: pointer;
+  box-shadow: var(--shadow-btn);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fortune-btn:hover {
+  transform: translateY(-2px);
+  color: var(--color-primary-hover);
+  box-shadow: var(--shadow-btn-hover);
+}
+
+.fortune-btn:active {
+  transform: scale(0.97);
+  box-shadow: var(--shadow-btn-active);
+}
+
+.fortune-btn.completed {
+  background: rgba(255, 255, 255, 0.85);
+  color: #627D98;
+}
+
+.btn-emoji {
+  font-size: 20px;
+}
+
+/* ==========================================================================
+   운세 결과 카드 (card-result: 순백색, 28px 라운드, 부드러운 그림자)
+   ========================================================================== */
+.result-card {
+  width: 100%;
+  background: var(--surface-card);
+  border-radius: var(--rounded-card);
+  padding: 28px 22px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  animation: popIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.result-card.hidden {
+  display: none;
+}
+
+/* 등급 뱃지 (badge-level: 9999px 필 형태) */
+.card-badge-wrap {
+  margin-bottom: 18px;
+}
+
+.fortune-badge {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--rounded-full);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: 1px;
+}
+
+/* 등급별 시맨틱 스타일 */
+.badge-대길 {
+  background: var(--level-daegil-bg);
+  color: var(--level-daegil-text);
+  box-shadow: 0 4px 12px var(--level-daegil-shadow);
+}
+
+.badge-길 {
+  background: var(--level-gil-bg);
+  color: var(--level-gil-text);
+  box-shadow: 0 4px 12px var(--level-gil-shadow);
+}
+
+.badge-보통 {
+  background: var(--level-botong-bg);
+  color: var(--level-botong-text);
+  box-shadow: 0 4px 12px var(--level-botong-shadow);
+}
+
+.badge-조심 {
+  background: var(--level-josim-bg);
+  color: var(--level-josim-text);
+  box-shadow: 0 4px 12px var(--level-josim-shadow);
+}
+
+/* 메인 운세 메시지 (heading-card) */
+.message-section {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+  padding: 0 var(--space-sm);
+}
+
+.fortune-message {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.55;
+  color: var(--foreground);
+  word-break: keep-all;
+}
+
+/* 구분선 */
+.card-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border-divider);
+  margin-bottom: var(--space-lg);
+}
+
+/* 세부 정보 영역 (item-detail: 18px 라운드, #F8FAFC) */
+.detail-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  background: var(--surface-subtle);
+  padding: 14px var(--space-base);
+  border-radius: var(--rounded-lg);
+}
+
+.detail-icon {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.detail-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex: 1;
+}
+
+.detail-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.detail-content {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--body);
+  word-break: keep-all;
+}
+
+/* 하단 유지 안내 문구 (caption) */
+.retention-notice {
+  margin-top: 18px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--caption);
+  text-align: center;
+}
+
+/* ==========================================================================
+   애니메이션 (Motion & Easing)
+   ========================================================================== */
+@keyframes floatIcon {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
