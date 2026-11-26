@@ -9,7 +9,11 @@
 
 // 로컬 스토리지 키
 const STORAGE_KEY = "today_fortune_data";
-const TODAY_MENU_BASE_URL = "https://todaymenu-zeta.vercel.app/";
+
+// 현재 화면에 표시된 운세 / 날씨 요약 (메뉴 추천 연동용)
+let currentFortuneSummary = "";
+let currentWeatherSummary = "";
+let isLoadingMenu = false;
 
 // 운세 요청 진행 여부 (중복 클릭 방지)
 let isLoadingFortune = false;
@@ -22,7 +26,21 @@ const fortuneLevel = document.getElementById("fortuneLevel");
 const fortuneMessage = document.getElementById("fortuneMessage");
 const fortuneAdvice = document.getElementById("fortuneAdvice");
 const fortuneLuckyItem = document.getElementById("fortuneLuckyItem");
-const menuRecommendLink = document.getElementById("menuRecommendLink");
+const openMenuBtn = document.getElementById("openMenuBtn");
+
+// 메뉴 추천 요소
+const menuSection = document.getElementById("menuSection");
+const menuMealTime = document.getElementById("menuMealTime");
+const menuMood = document.getElementById("menuMood");
+const menuWeather = document.getElementById("menuWeather");
+const menuFortune = document.getElementById("menuFortune");
+const menuSubmitBtn = document.getElementById("menuSubmitBtn");
+const menuResultBox = document.getElementById("menuResultBox");
+const menuResEmoji = document.getElementById("menuResEmoji");
+const menuResName = document.getElementById("menuResName");
+const menuResPoint = document.getElementById("menuResPoint");
+const menuResReason = document.getElementById("menuResReason");
+const menuResTip = document.getElementById("menuResTip");
 
 // 날씨 표시 요소
 const weatherPanel = document.getElementById("weatherPanel");
@@ -99,10 +117,10 @@ function renderFortuneCard(fortune) {
   fortuneAdvice.textContent = fortune.advice;
   fortuneLuckyItem.textContent = fortune.luckyItem;
 
-  // 오늘의 메뉴 추천 페이지 링크에 현재 운세 전달
-  if (menuRecommendLink) {
-    const fortuneSummary = `[${fortune.level}] ${fortune.message}`;
-    menuRecommendLink.href = `${TODAY_MENU_BASE_URL}?fortune=${encodeURIComponent(fortuneSummary)}`;
+  // 메뉴 추천 연동용 운세 요약 저장
+  currentFortuneSummary = `[${fortune.level}] ${fortune.message}`;
+  if (menuFortune && !menuFortune.value) {
+    menuFortune.value = currentFortuneSummary;
   }
 
   // 카드 노출
@@ -162,6 +180,7 @@ function renderWeather(weather) {
 
   weatherIcon.textContent = icon;
   weatherText.textContent = parts.join(" ");
+  currentWeatherSummary = parts.join(" ");
 
   // 갱신 시각 표시
   const now = new Date();
@@ -260,6 +279,12 @@ function initializeApp() {
 
   // 버튼 클릭 이벤트 리스너 등록
   fortuneButton.addEventListener("click", handleFortuneButtonClick);
+  if (openMenuBtn) {
+    openMenuBtn.addEventListener("click", handleOpenMenuSection);
+  }
+  if (menuSubmitBtn) {
+    menuSubmitBtn.addEventListener("click", handleMenuRecommend);
+  }
 
   // 하단 실시간 날씨: 즉시 1회 + 5분마다 갱신 (실패해도 운세 기능은 그대로 동작)
   refreshWeather();
@@ -271,6 +296,71 @@ function initializeApp() {
       refreshWeather();
     }
   });
+}
+
+// 메뉴 추천 카드 열기 및 운세/날씨 자동 채우기
+function handleOpenMenuSection() {
+  if (!menuSection) return;
+  if (menuFortune && currentFortuneSummary) {
+    menuFortune.value = currentFortuneSummary;
+  }
+  if (menuWeather && !menuWeather.value && currentWeatherSummary) {
+    menuWeather.value = currentWeatherSummary;
+  }
+  menuSection.classList.remove("hidden");
+  menuSection.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// 서버의 /api/menu 에 오늘의 메뉴 추천 요청
+async function handleMenuRecommend() {
+  if (isLoadingMenu) return;
+
+  isLoadingMenu = true;
+  menuSubmitBtn.disabled = true;
+  menuSubmitBtn.textContent = "🔮 기운을 읽고 메뉴 고르는 중...";
+  menuResultBox.classList.add("hidden");
+
+  let hasResult = false;
+  try {
+    const response = await fetch("/api/menu", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mealTime: menuMealTime.value,
+        mood: menuMood.value,
+        weather: menuWeather.value,
+        fortune: menuFortune.value,
+      }),
+    });
+
+    const rawText = await response.text();
+    let data = {};
+    try {
+      data = rawText ? JSON.parse(rawText) : {};
+    } catch {
+      throw new Error(`서버 응답을 해석할 수 없습니다. (HTTP ${response.status})`);
+    }
+
+    if (!response.ok) {
+      throw new Error(data.error || `오류가 발생했습니다. (HTTP ${response.status})`);
+    }
+
+    menuResEmoji.textContent = data.emoji || "🍽️";
+    menuResName.textContent = data.menu || "오늘의 추천 메뉴";
+    menuResPoint.textContent = `✨ ${data.luckyPoint || "행운 가득한 한 끼"}`;
+    menuResReason.textContent = data.reason || "";
+    menuResTip.textContent = `💡 곁들임 팁: ${data.sideTip || "따뜻한 물 한 잔과 함께 즐겨보세요."}`;
+
+    menuResultBox.classList.remove("hidden");
+    menuResultBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    hasResult = true;
+  } catch (error) {
+    alert(error.message || "메뉴 추천 중 오류가 발생했습니다.");
+  } finally {
+    isLoadingMenu = false;
+    menuSubmitBtn.disabled = false;
+    menuSubmitBtn.textContent = hasResult ? "🔄 다른 메뉴 다시 점지받기" : "✨ 오늘의 메뉴 점지받기";
+  }
 }
 
 // DOM 콘텐츠 로드 완료 시 초기화 실행

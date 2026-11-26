@@ -60,14 +60,62 @@
           </div>
         </div>
 
-        <!-- 오늘의 메뉴 추천 연결 버튼 -->
-        <a id="menuRecommendLink" class="menu-recommend-btn" href="https://todaymenu-zeta.vercel.app/" target="_blank" rel="noopener noreferrer">
+        <!-- 오늘의 메뉴 추천 열기 버튼 -->
+        <button id="openMenuBtn" class="menu-recommend-btn" type="button">
           <span aria-hidden="true">🍽️</span>
           <span>이 운세로 오늘 메뉴 점지받기</span>
-        </a>
+        </button>
 
         <!-- 하루 유지 안내 -->
         <p class="retention-notice">※ 오늘 하루 동안 동일한 운세가 유지됩니다.</p>
+      </section>
+
+      <!-- 오늘의 메뉴 추천 카드 (초기 상태 숨김) -->
+      <section id="menuSection" class="menu-card hidden" aria-live="polite">
+        <div class="menu-header">
+          <span class="menu-header-icon" aria-hidden="true">🍽️</span>
+          <h2 class="menu-heading">오늘의 행운 메뉴</h2>
+          <p class="menu-subheading">운세와 기분을 읽고 오늘 딱 맞는 한 끼를 점지해 드려요</p>
+        </div>
+
+        <div class="menu-form">
+          <div class="menu-form-group">
+            <label for="menuMealTime">언제 드시나요?</label>
+            <select id="menuMealTime">
+              <option value="점심 식사">점심 식사</option>
+              <option value="저녁 식사">저녁 식사</option>
+              <option value="야식 / 술안주">야식 / 술안주</option>
+              <option value="브런치 / 간식">브런치 / 간식</option>
+            </select>
+          </div>
+
+          <div class="menu-form-group">
+            <label for="menuMood">지금 기분이나 컨디션은?</label>
+            <input type="text" id="menuMood" placeholder="예: 피곤함, 스트레스 받음, 기분 최고" />
+          </div>
+
+          <div class="menu-form-group">
+            <label for="menuWeather">오늘 날씨나 주변 분위기</label>
+            <input type="text" id="menuWeather" placeholder="예: 쌀쌀함, 비 오는 날, 혼밥, 동료와 함께" />
+          </div>
+
+          <div class="menu-form-group">
+            <label for="menuFortune">오늘의 운세 키워드</label>
+            <input type="text" id="menuFortune" placeholder="운세가 자동으로 채워집니다" />
+          </div>
+
+          <button id="menuSubmitBtn" class="menu-submit-btn" type="button">
+            ✨ 오늘의 메뉴 점지받기
+          </button>
+        </div>
+
+        <div id="menuResultBox" class="menu-result-box hidden">
+          <div id="menuResEmoji" class="menu-res-emoji">🍜</div>
+          <div id="menuResName" class="menu-res-title">메뉴 이름</div>
+          <div id="menuResPoint" class="menu-res-badge">행운 포인트</div>
+          <p id="menuResReason" class="menu-res-reason"></p>
+          <div id="menuResTip" class="menu-res-tip"></div>
+        </div>
       </section>
     </main>
 
