@@ -1,0 +1,8 @@
+.env
+data/ai-fortunes.json*
+dist/
+.netlify/
+fortunecookie-dist.zip
+.vercel/
+.vercel
+.env*

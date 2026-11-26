@@ -1,0 +1,12 @@
+.env
+.env.*
+docs/
+.dev/
+.git/
+.netlify/
+netlify/
+netlify.toml
+server.js
+fortunecookie-dist.zip
+data/ai-fortunes.json*
+.DS_Store
