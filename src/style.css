@@ -157,6 +157,60 @@ body {
   color: var(--muted);
 }
 
+/* 하단 실시간 날씨 (모바일 프레임 맨 아래) */
+.app-footer {
+  margin-top: auto;
+  padding-top: var(--space-xxl);
+  display: flex;
+  justify-content: center;
+}
+
+.weather-panel {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  row-gap: var(--space-xs);
+  max-width: 100%;
+  padding: 10px var(--space-lg);
+  border-radius: var(--rounded-full);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 6px 18px rgba(40, 75, 110, 0.12);
+  color: var(--color-primary);
+}
+
+.weather-panel.hidden {
+  display: none;
+}
+
+.weather-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: var(--muted);
+  padding-right: var(--space-sm);
+  border-right: 1px solid var(--border-divider);
+}
+
+.weather-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.weather-text {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.weather-updated {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--caption);
+}
+
 /* ==========================================================================
    메인 컨텐츠 및 버튼 영역
    ========================================================================== */
@@ -339,6 +393,29 @@ body {
   line-height: 1.45;
   color: var(--body);
   word-break: keep-all;
+}
+
+/* 오늘의 메뉴 추천 연결 버튼 */
+.menu-recommend-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px 16px;
+  border-radius: var(--rounded-lg);
+  background: #f59e0b;
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.menu-recommend-btn:hover {
+  background: #d97706;
+  transform: translateY(-1px);
 }
 
 /* 하단 유지 안내 문구 (caption) */

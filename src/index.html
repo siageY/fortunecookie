@@ -60,10 +60,26 @@
           </div>
         </div>
 
+        <!-- 오늘의 메뉴 추천 연결 버튼 -->
+        <a id="menuRecommendLink" class="menu-recommend-btn" href="https://todaymenu-zeta.vercel.app/" target="_blank" rel="noopener noreferrer">
+          <span aria-hidden="true">🍽️</span>
+          <span>이 운세로 오늘 메뉴 점지받기</span>
+        </a>
+
         <!-- 하루 유지 안내 -->
         <p class="retention-notice">※ 오늘 하루 동안 동일한 운세가 유지됩니다.</p>
       </section>
     </main>
+
+    <!-- 하단 실시간 날씨 (서울 기준) -->
+    <footer class="app-footer">
+      <div id="weatherPanel" class="weather-panel hidden" aria-live="polite">
+        <span class="weather-label">실시간 날씨</span>
+        <span id="weatherIcon" class="weather-icon" aria-hidden="true">☀️</span>
+        <span id="weatherText" class="weather-text"></span>
+        <span id="weatherUpdated" class="weather-updated"></span>
+      </div>
+    </footer>
   </div>
 
   <script src="script.js"></script>
